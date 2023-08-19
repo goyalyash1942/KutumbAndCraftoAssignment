@@ -1,5 +1,8 @@
 # KutumbAndCraftoAssignment
 
+WATCH ME : https://drive.google.com/file/d/1dylhFMwANqFmBbxa_fnnigYvYDfYMTIA/view?usp=sharing
+Video of full successful execution of the test suite
+
 To run the code:
 1. Appium GUI or appium server should be installed in the system.
 2. Please use android studio or intellij preferrably to run the project
