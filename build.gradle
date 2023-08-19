@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'org.kutumb'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.testng:testng:7.1.0'
+    implementation 'org.json:json:20211205'
+    implementation 'io.appium:java-client:8.1.1'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.2.1'
+    implementation 'commons-io:commons-io:2.7'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.3'
+    implementation "org.apache.commons:commons-lang3:3.9"
+}
+
+test {
+    useTestNG()
+}
