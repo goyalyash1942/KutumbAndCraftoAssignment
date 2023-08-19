@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Arrays;
 
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -114,8 +119,45 @@ public class BaseClass {
     public void click(By locator) {
     	driver.findElement(locator).click();
     }
-    
-	
+
+    public void click(By element, int duration) {
+        if (waitForElementVisible(element, duration)) {
+            click(element);
+        }
+    }
+
+    public void scrollUp() {
+        Dimension dimension = driver.manage().window().getSize();
+        int scrollHeightStart = (int) (dimension.getHeight() * .3);
+        int scrollHeightEnd = (int) (dimension.getHeight() * .7);
+        Duration STEP_DURATION = Duration.ofMillis(700);
+        Duration NO_TIME = Duration.ofMillis(0);
+        PointerInput.Origin VIEW = PointerInput.Origin.viewport();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+        swipe.addAction(finger.createPointerMove(NO_TIME, VIEW, dimension.getWidth() / 2, scrollHeightStart));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(STEP_DURATION, VIEW, dimension.getWidth() / 2, scrollHeightEnd));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        driver.perform(Arrays.asList(swipe));
+    }
+
+    public void scrollDown() {
+        Dimension dimension = driver.manage().window().getSize();
+        int scrollHeightStart = (int) (dimension.getHeight() * .5);
+        int scrollHeightEnd = (int) (dimension.getHeight() * .2);
+        Duration STEP_DURATION = Duration.ofMillis(700);
+        Duration NO_TIME = Duration.ofMillis(0);
+        PointerInput.Origin VIEW = PointerInput.Origin.viewport();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+        swipe.addAction(finger.createPointerMove(NO_TIME, VIEW, dimension.getWidth() / 2, scrollHeightStart));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(STEP_DURATION, VIEW, dimension.getWidth() / 2, scrollHeightEnd));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        driver.perform(Arrays.asList(swipe));
+    }
+
 	@AfterSuite
 	public void teardown() {
 		driver.quit();

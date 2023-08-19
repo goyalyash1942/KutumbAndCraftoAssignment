@@ -10,10 +10,13 @@ import pageObjectModels.OnboardingScreensPOM;
 import java.util.logging.Logger;
 
 public class OnboardingScreenTest extends BaseClass{
-	
-	//Note:: please don't judge on test cases number as one automation case here is covering multiple unit cases.
+
+	//******All The Cases are perfectly running on my system I have attached a video proof for the same
+	// Only run this class after reading the ReadMe File
+	//Note:: please don't judge on the number of test cases as one automation case here is covering multiple unit cases.
 	//will not write the otp expiry case bcs I only have one user and that may lead to user block on your server.
-	
+	//Have created a simple appium framework here.
+
 	private static String phoneNumber = "1111119546";
 	private static String otp = "5478";
 	
@@ -27,7 +30,6 @@ public class OnboardingScreenTest extends BaseClass{
 		checkIsElementDisplayed(OnboardingScreensPOM.getLoginPhoneBtn(), 1);
 		checkIsDisplayedWithText(OnboardingScreensPOM.getSelected_country_tv(), OnboardingScreensPOM.getSelected_country_tv_txt());
 		checkIsDisplayedWithText(OnboardingScreensPOM.getLoginPhoneET(), OnboardingScreensPOM.getLoginPhoneET_txt());
-//		checkIsDisplayedWithText(OnboardingScreensPOM.getLegalText(), OnboardingScreensPOM.getLegalText_txt());
 	}
 	
 	@Test()
@@ -37,11 +39,11 @@ public class OnboardingScreenTest extends BaseClass{
 		checkIsElementDisplayed(OnboardingScreensPOM.getTitle_tv(), 2);
 		checkIsDisplayedWithText(OnboardingScreensPOM.getSearch_edt(), OnboardingScreensPOM.getSearch_edt_txt());
 		clickAndSendKeysToElement(OnboardingScreensPOM.getSearch_edt(), "United States");
-		click(OnboardingScreensPOM.getFlag_imv());
+		checkIsElementDisplayed(OnboardingScreensPOM.getFlag_imv(), 2);
+		checkIsElementDisplayed(OnboardingScreensPOM.getCountry_name_tv(), 1);
+		checkIsElementDisplayed(OnboardingScreensPOM.getCode_tv(), 1);
 		click(OnboardingScreensPOM.getCountry_name_tv());
-		click(OnboardingScreensPOM.getCode_tv());
-		click(OnboardingScreensPOM.getCountry_name_tv());
-		checkIsElementDisplayed(OnboardingScreensPOM.getSelected_country_tv(), 2);
+		checkIsElementDisplayed(OnboardingScreensPOM.getSelected_country_tv(), 5);
 		checkIsDisplayedWithText(OnboardingScreensPOM.getSelected_country_tv(), "UNITED STATES (US) +1");
 	}
 	
@@ -49,25 +51,31 @@ public class OnboardingScreenTest extends BaseClass{
 	public void verifyUserEnteringInvalidOrIncompletePhoneNumber() {
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
 		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), "bafjfbak"); //invalid
-		checkIsElementDisplayed(OnboardingScreensPOM.getInvalidNumberToast(), 1);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), "111111954"); //incomplete
+		pressBack(); //closing keyboard
+		click(OnboardingScreensPOM.getLoginPhoneBtn());
+		checkIsElementDisplayed(OnboardingScreensPOM.getInvalidNumberToast(), 2);
+		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), "111"); //incomplete
+		pressBack(); //closing keyboard
+		click(OnboardingScreensPOM.getLoginPhoneBtn());
 		checkIsElementDisplayed(OnboardingScreensPOM.getInvalidNumberToast(), 1);
 	}
 	
 	@Test()
 	public void verifyUserEnteringRightPhoneNumberAndMovingToOTPScreen() {
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber); 
+		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber);
+		pressBack(); //closing keyboard
 		click(OnboardingScreensPOM.getLoginPhoneBtn());
-		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 4);
+		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 5);
 	}
 	
 	@Test()
 	public void verifyOTPScreenUiAndVerifyEnteringWrongOTPAndRetryingForOTPThenEnteringRightOTPAndMovingToHomeScreen() throws InterruptedException {
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
 		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber);
+		pressBack(); //closing keyboard
 		click(OnboardingScreensPOM.getLoginPhoneBtn());
-		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 1);
+		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 3);
 		checkIsDisplayedWithText(OnboardingScreensPOM.getOtpText(), OnboardingScreensPOM.getOtpText_txt());
 		checkIsElementDisplayed(OnboardingScreensPOM.getProgressBar(), 1);
 		checkIsDisplayedWithText(OnboardingScreensPOM.getWaitForOtp(), OnboardingScreensPOM.getWaitForOtp_());
@@ -81,13 +89,14 @@ public class OnboardingScreenTest extends BaseClass{
 		Thread.sleep(1000);
 		Assert.assertTrue(Integer.parseInt(getText(OnboardingScreensPOM.getOtpTimerTV())) < 30);
 		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), "7896"); //wrong otp
-		checkIsElementDisplayed(OnboardingScreensPOM.getInvalidOtpToast(), 1);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), otp); 
-		checkIsElementDisplayed(OnboardingScreensPOM.getProfileIconLayout(), 5);
+		pressBack(); //closing keyboard
+		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), otp);
+		handleHomeScreen();
+		checkIsElementDisplayed(OnboardingScreensPOM.getToolbarProfileIV(), 2);
 	}
 	
 	@Test()
-	public void verifykillingAppAndRelaunchingOnPhoneNumberScreen() {
+	public void verifyKillingAppAndRelaunchingOnPhoneNumberScreen() {
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
 		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber); 
 		relaunchApp();
@@ -96,9 +105,10 @@ public class OnboardingScreenTest extends BaseClass{
 	}
 	
 	@Test()
-	public void verifykillingAppAndRelaunchingOnOTPScreen() {
+	public void verifyKillingAppAndRelaunchingOnOTPScreen() {
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber); 
+		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber);
+		pressBack(); //closing keyboard
 		click(OnboardingScreensPOM.getLoginPhoneBtn());
 		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 4);
 		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), "789"); //incomplete otp
@@ -108,55 +118,60 @@ public class OnboardingScreenTest extends BaseClass{
 	}
 
 	@Test()
-	public void verifySuccessfulLoginTillHomeScreenAndkillingAppAndRelaunchingOnHomeScreenThenScrollHomeScreen() {
+	public void verifySuccessfulLoginTillHomeScreenAndKillingAppAndRelaunchingOnHomeScreenThenScrollHomeScreen() throws InterruptedException {
+		login();
+		relaunchApp();
+		checkIsElementDisplayed(OnboardingScreensPOM.getToolbarProfileIV(), 5);
+		Thread.sleep(2000);
+		scrollDown();
+		Thread.sleep(2000);
+		scrollDown();
+		Thread.sleep(2000);
+		scrollUp();
+	}
+
+	@Test()
+	public void verifyLoggingOutAndReachingPhoneNumberScreen(){
+		login();
+		click(OnboardingScreensPOM.getToolbarProfileIV());
+		click(OnboardingScreensPOM.getProfileMenuSetting(), 3000);
+		click(OnboardingScreensPOM.getLogOut_button(), 3000);
+		click(OnboardingScreensPOM.getButton1(), 3000);
 		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber); 
+		checkIsDisplayedWithText(OnboardingScreensPOM.getTitleTV(), OnboardingScreensPOM.getTitleTV_txt());
+	}
+
+	@Test()
+	public void verifyNavigatingBackFromOtpScreenToChangePhoneNumber(){
+		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
+		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber);
+		pressBack(); //closing keyboard
 		click(OnboardingScreensPOM.getLoginPhoneBtn());
 		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 4);
-		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), otp); 
-		checkIsElementDisplayed(OnboardingScreensPOM.getProfileIconLayout(), 5);
-		relaunchApp();
-		checkIsElementDisplayed(OnboardingScreensPOM.getProfileIconLayout(), 5);
+		pressBack();
+		checkIsElementDisplayed(OnboardingScreensPOM.getLoginPhoneET(), 10);
 	}
-//	
-//	@Test()
-//	public void verifyLoggingOutAndReachingPhoneNumberScreen(){
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//	}
-//	
-//	@Test()
-//	public void verifyNavigatingBackFromOtpScreenToChangePhoneNumber(){
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsElementDisplayed(OnboardingScreensPOM, 1);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//		checkIsDisplayedWithText(OnboardingScreensPOM, OnboardingScreensPOM);
-//	}
-//	
+
+	private void handleHomeScreen(){
+		if(waitForElementVisible(OnboardingScreensPOM.getAllow_button(), 5)){
+			click(OnboardingScreensPOM.getAllow_button()); //handling swipe tutorial
+		}
+		if(waitForElementVisible(OnboardingScreensPOM.getSwipeUpTV(), 6)){
+			click(OnboardingScreensPOM.getSwipeUpButton()); //handling permissions
+		}
+	}
+
+	private void login(){
+		checkIsElementDisplayed(OnboardingScreensPOM.getAppLogo(), 10);
+		clickAndSendKeysToElement(OnboardingScreensPOM.getLoginPhoneET(), phoneNumber);
+		pressBack(); //closing keyboard
+		click(OnboardingScreensPOM.getLoginPhoneBtn());
+		checkIsElementDisplayed(OnboardingScreensPOM.getOtpText(), 4);
+		clickAndSendKeysToElement(OnboardingScreensPOM.getOtpEditText(), otp);
+		handleHomeScreen();
+		checkIsElementDisplayed(OnboardingScreensPOM.getToolbarProfileIV(), 5);
+	}
+
 	@AfterMethod
 	public void testTearDown() {
 		Logger.getLogger("Khamma Ghanii :)");

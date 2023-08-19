@@ -69,8 +69,105 @@ public class OnboardingScreensPOM extends BaseClass {
     static String retryTV_txt = "Retry";
     static By profileIconLayout = By.id("com.crafto.android:id/profileIconLayout");
     static By invalidOtpToast = By.xpath("/hierarchy/android.widget.Toast[1]");
+    static By swipeIV = By.id("com.crafto.android:id/swipeIV");
+    static By swipeUpTV = By.id("com.crafto.android:id/swipeUpTV");
+    static String swipeUpTV_TXT = "Swipe to read quotes";
+    static By swipeUpButton = By.id("com.crafto.android:id/swipeUpButton");
+    static String swipeUpButton_TXT = "Got it!";
+    static By chipsCategoryLayout = By.id("com.crafto.android:id/chipsCategoryLayout");
+    static By et_search = By.id("com.crafto.android:id/et_search");
+    static String et_search_TXT = "search";
+    static By tvCreate = By.id("com.crafto.android:id/tvCreate");
+    static String tvCreate_TXT = "Create";
+    static By toolbarProfileIV = By.id("com.crafto.android:id/toolbarProfileIV");
+    static By profileMenuSetting = By.id("com.crafto.android:id/profileMenuSetting");
+    static String profileMenuSetting_TXT = "Settings";
+    static By logOut_button = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+            "android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup[1]/" +
+            "android.widget.ScrollView/androidx.appcompat.widget.LinearLayoutCompat/android.view.ViewGroup[2]/androidx.recyclerview.widget.RecyclerView/" +
+            "android.view.ViewGroup[4]/android.widget.TextView");
+    static String logOut_button_txt = "Logout";
+    static By alertTitle = By.id("com.crafto.android:id/alertTitle");
+    static By button1 = By.id("android:id/button1");
+    static By allow_button = By.id("com.android.permissioncontroller:id/permission_allow_button");
+    static String yes_txt = "YES";
 
-    
+    public static By getAllow_button() {
+        return allow_button;
+    }
+
+    public static By getSwipeIV() {
+        return swipeIV;
+    }
+
+    public static By getSwipeUpTV() {
+        return swipeUpTV;
+    }
+
+    public String getSwipeUpTV_TXT() {
+        return swipeUpTV_TXT;
+    }
+
+    public static By getSwipeUpButton() {
+        return swipeUpButton;
+    }
+
+    public String getSwipeUpButton_TXT() {
+        return swipeUpButton_TXT;
+    }
+
+    public static By getChipsCategoryLayout() {
+        return chipsCategoryLayout;
+    }
+
+    public static By getEt_search() {
+        return et_search;
+    }
+
+    public String getEt_search_TXT() {
+        return et_search_TXT;
+    }
+
+    public static By getTvCreate() {
+        return tvCreate;
+    }
+
+    public String getTvCreate_TXT() {
+        return tvCreate_TXT;
+    }
+
+    public static By getToolbarProfileIV() {
+        return toolbarProfileIV;
+    }
+
+    public static By getProfileMenuSetting() {
+        return profileMenuSetting;
+    }
+
+    public String getProfileMenuSetting_TXT() {
+        return profileMenuSetting_TXT;
+    }
+
+    public static By getLogOut_button() {
+        return logOut_button;
+    }
+
+    public String getLogOut_button_txt() {
+        return logOut_button_txt;
+    }
+
+    public static By getAlertTitle() {
+        return alertTitle;
+    }
+
+    public static By getButton1() {
+        return button1;
+    }
+
+    public String getYes_txt() {
+        return yes_txt;
+    }
+
     public static By getInvalidOtpToast() {
         return invalidOtpToast;
     }
