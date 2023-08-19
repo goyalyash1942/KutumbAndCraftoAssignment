@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "820bd4ef-8303-4b35-971d-1c0f4d64417e",
+		"name": "Kutumb Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "(verify otp) with correct phone and otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Test json = OK\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"OK\");",
+							"});",
+							"pm.test(\"Test json not eql to null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.not.eql(null);",
+							"});",
+							"pm.test(\"authToken not eql to null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.authToken).to.not.eql(null);",
+							"});",
+							"pm.test(\"authToken length = 303\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.authToken).length(303);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"911111119546\",\n   \"otp\": \"5478\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/verify/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"verify",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(verify/otp) with Wrong OTP Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Test json = null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(null);",
+							"});",
+							"pm.test(\"Test json not eql to OK\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.not.eql(\"OK\");",
+							"});",
+							"pm.test(\"no auth token\", function () {",
+							"    pm.expect(pm.response.text()).to.not.include(\"authToken\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"911111119549\",\n   \"otp\": \"7658\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/verify/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"verify",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Send/OTP) to Wrong or Incomplete Number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test json = null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(null);",
+							"});",
+							"pm.test(\"Test json not eql to OK\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.not.eql(\"OK\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"91111112\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/send/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"send",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Send/OTP) to right phone number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Test json = OK\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"OK\");",
+							"});",
+							"pm.test(\"Test json not eql to null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.not.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"911111119546\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/send/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"send",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(verify/otp) sending null phone number in verify otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"pm.test(\"Unsuccesful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.not.oneOf([201, 202]);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bad Request\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"\",\n   \"otp\": \"5478\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/verify/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"verify",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify sending null phone number in send otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"pm.test(\"Unsuccesful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.not.oneOf([201, 202]);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bad Request\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"phone\": \"\"\n}"
+				},
+				"url": {
+					"raw": "https://crafto.app/crafto/v1.0/send/otp/android",
+					"protocol": "https",
+					"host": [
+						"crafto",
+						"app"
+					],
+					"path": [
+						"crafto",
+						"v1.0",
+						"send",
+						"otp",
+						"android"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
